@@ -53,12 +53,12 @@ array_reverse($csv);
 $dateline = false;
 $datecount = 0;
 foreach ($csv as $line) {
-	$datetotal = '<tr><td>' . $dateline . ' total: ' . $datecount . '</td></tr>';
-	if (!$dateline || $dateline != $line['date']) {
-		echo $datetotal;
+	if ($dateline != $line['date']) {
+		$newdate = true;
 		$dateline = $line['ref'];
 		$datecount = 0;
 		}
+	$datetotal = '<tr><td>' . $dateline . ' total: ' . $datecount . '</td></tr>';
 	$datecount++;
 	?>
 	<tr>
@@ -66,7 +66,8 @@ foreach ($csv as $line) {
 		<td><?php echo $line['msg']; ?></td>
 		<td><?php echo $line['ref']; ?></td>
 	</tr>
-	<?php 
+	<?php
+		if ($newdate) { echo $datetotal; $newdate = false; }
 	} ?>
 </table>
 </body>
