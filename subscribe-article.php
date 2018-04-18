@@ -12,8 +12,9 @@ $date = date("D M d, Y G:i");
 if ($message_version) {
 	$line = array($date,$message_version,$source_url);
 	var_dump($line);
-	$handle = fopen("track-subscribe-article.csv", "a");
-	fputcsv($handle, $line);
+	if (($handle = fopen("track-subscribe-article.csv", "a")) !== FALSE) {
+		fputcsv($handle, $line);
+	}
 	fclose($handle);
 }
 
