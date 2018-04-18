@@ -53,7 +53,7 @@ array_reverse($csv);
 $dateline = false;
 $datecount = 0;
 foreach ($csv as $line) {
-	$datetotal = '<tr><td>' . $dateline . ' total: ' $datecount . '</td></tr>';
+	$datetotal = '<tr><td>' . $dateline . ' total: ' . $datecount . '</td></tr>';
 	if (!$dateline || $dateline != $line['date']) {
 		echo $datetotal;
 		$dateline = $line['ref'];
