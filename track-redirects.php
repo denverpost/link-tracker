@@ -5,6 +5,11 @@
 	<link rel="icon" href="http://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script>
+		function toldya() {
+			window.alert('I told you, didn\'t I?');
+		}
+	</script>
 </head>
 <body>
 	<section id="header">
@@ -20,7 +25,7 @@
 				<section class="top-bar-section">
 				<ul class="right">
 					<li class="divider"></li>
-					<li class="top-top"><a href="javascript:void(0);" id="snowBtn">This Link Does Not Do Anything</a></li>
+					<li class="top-top"><a href="javascript:toldya();" id="snowBtn">This Link Does Not Do Anything</a></li>
 					<li class="divider"></li>
 				</ul>
 			</section>
@@ -48,18 +53,23 @@ foreach ($csv as $i=>$row) {
 array_reverse($csv);
 
 ?>
-<tr><th>Date &amp; Time</th><th>Message</th><th>Referrer</th></tr>
+<tr style="background:#e5e5e5;"><th>Date</th><th>Message</th><th>Referrer</th></tr>
 <?php
 $dateline = false;
 $datecount = 0;
+$i=0;
+$len=count($csv);
 foreach ($csv as $line) {
-	if ($dateline != $line['date']) {
-		$newdate = true;
-		$dateline = $line['ref'];
-		$datecount = 0;
-		}
-	$datetotal = '<tr><td>' . $dateline . ' total: ' . $datecount . '</td></tr>';
+	$i++;
+	$datetotal = '<tr style="background:#e5efff;"><td colspan="3"><strong>' . $dateline . '</strong> total redirects: <strong>' . $datecount . '</strong></td></tr>';
 	$datecount++;
+	if ($dateline !== false && $dateline != $line['date']) {
+		echo $datetotal;
+		$datecount = 1;
+	}
+	if ($dateline != $line['date']) {
+		$dateline = $line['date'];
+		}
 	?>
 	<tr>
 		<td><?php echo $line['date']; ?></td>
@@ -67,7 +77,9 @@ foreach ($csv as $line) {
 		<td><?php echo $line['ref']; ?></td>
 	</tr>
 	<?php
-		if ($newdate) { echo $datetotal; $newdate = false; }
+	if ($i==$len) {
+		echo '<tr style="background:#e5efff;"><td colspan="3"><strong>' . $dateline . '</strong> total redirects: <strong>' . $datecount . '</strong></td></tr>';
+	}
 	} ?>
 </table>
 </body>
