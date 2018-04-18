@@ -50,13 +50,24 @@ array_reverse($csv);
 ?>
 <tr><th>Date &amp; Time</th><th>Message</th><th>Referrer</th></tr>
 <?php
-foreach ($csv as $line) { ?>
+$dateline = false;
+$datecount = 0;
+foreach ($csv as $line) {
+	$datetotal = '<tr><td>' . $dateline . ' total: ' $datecount . '</td></tr>';
+	if (!$dateline || $dateline != $line['date']) {
+		echo $datetotal;
+		$dateline = $line['ref'];
+		$datecount = 0;
+		}
+	$datecount++;
+	?>
 	<tr>
 		<td><?php echo $line['date']; ?></td>
 		<td><?php echo $line['msg']; ?></td>
 		<td><?php echo $line['ref']; ?></td>
 	</tr>
-<?php } ?>
+	<?php 
+	} ?>
 </table>
 </body>
 </html>
