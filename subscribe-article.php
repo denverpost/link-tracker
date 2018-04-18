@@ -1,6 +1,11 @@
 <?php
 
 $source_url = $_SERVER['HTTP_REFERER'];
+
+if (! $source_url ) {
+	echo 'Sorry, I don\'t know how to do that.';
+	die;
+}
 $message_version = $_GET['msg'];
 $date = date("D M d, Y G:i");
 
