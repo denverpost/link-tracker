@@ -2,7 +2,7 @@
 	<title>Denver Post Redirect Follower Results</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css" />
-	<link rel="icon" href="http://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="//plus.denverpost.com/favicon.ico" type="image/x-icon" />
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script>
@@ -19,7 +19,7 @@
 			<nav class="top-bar" data-topbar="" role="navigation">
 				<ul class="title-area">
 					<li class="name">
-						<a href="http://denverpost.com"><img src="http://extras.denverpost.com/candidate-qa/denver-2015/images/dp-logo-white.png" alt="The Denver Post logo" class="nav-logo" style="    height: 35px;padding: 10px 25px 0px 10px;"></a>
+						<a href="https://denverpost.com"><img src="https://extras.denverpost.com/candidate-qa/denver-2015/images/dp-logo-white.png" alt="The Denver Post logo" class="nav-logo" style="    height: 35px;padding: 10px 25px 0px 10px;"></a>
 					</li>
 				</ul>
 				<section class="top-bar-section">
