@@ -1,7 +1,22 @@
 <?php
 
+function getIP($ip = null, $deep_detect = TRUE){
+    if (filter_var($ip, FILTER_VALIDATE_IP) === FALSE) {
+        $ip = $_SERVER["REMOTE_ADDR"];
+        if ($deep_detect) {
+            if (filter_var(@$_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP))
+                $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            if (filter_var(@$_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP))
+                $ip = $_SERVER['HTTP_CLIENT_IP'];
+        }
+    } else {
+        $ip = $_SERVER["REMOTE_ADDR"];
+    }
+    return $ip;
+}
+
 $source_url = $_SERVER['HTTP_REFERER'];
-$client_ip = $_SERVER['REMOTE_ADDR'];
+$client_ip = getIP(null,true);
 
 $rows = file("track-subscribe-article.csv");
 $last_row = array_pop($rows);
