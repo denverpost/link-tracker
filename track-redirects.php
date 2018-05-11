@@ -46,14 +46,15 @@
 <?php
 
 $csv = array_map("str_getcsv", file("track-subscribe-article.csv",FILE_SKIP_EMPTY_LINES));
+array_reverse($csv,true);
 $keys = array_shift($csv);
 foreach ($csv as $i=>$row) {
     $csv[$i] = array_combine($keys, $row);
 }
-array_reverse($csv);
+
 
 ?>
-<tr style="background:#e5e5e5;"><th>Date Recorded</th><th>Msg</th><th>Referrer</th></tr>
+<tr style="background:#e5e5e5;"><th width="20%">Date Recorded</th><th>Msg</th><th width="60%">Referrer</th><th>IP</th></tr>
 <?php
 $dateline = false;
 $datecount = 0;
@@ -61,24 +62,26 @@ $i=0;
 $len=count($csv);
 foreach ($csv as $line) {
 	$i++;
-	$datetotal = '<tr style="background:#e5efff;"><td colspan="3"><strong>' . $dateline . '</strong> total redirects: <strong>' . $datecount . '</strong></td></tr>';
+	$datetotal = '<tr style="background:#e5efff;"><td colspan="4"><strong>' . $dateline . '</strong> total redirects: <strong>' . $datecount . '</strong></td></tr>';
 	$datecount++;
-	if ($dateline !== false && $dateline != $line['date']) {
+	$line_date = date("m-d-Y",strtotime($line['date']));
+	if ($dateline !== false && $dateline != $line_date) {
 		echo $datetotal;
 		$datecount = 1;
 	}
-	if ($dateline != $line['date']) {
-		$dateline = $line['date'];
+	if ($dateline != $line_date) {
+		$dateline = $line_date;
 		}
 	?>
 	<tr>
 		<td><?php echo $line['date']; ?></td>
-		<td><?php echo $line['msg']; ?></td>
-		<td><?php echo $line['ref']; ?></td>
+		<td style="text-align:center"><?php echo $line['msg']; ?></td>
+		<td><?php if (strrpos($line['ref'], 'data unavailable') == FALSE): ?><a href="<?php echo $line['ref']; ?>"><?php endif; ?><?php echo $line['ref']; ?><?php if (strrpos($line['ref'], 'data unavailable') == FALSE): ?></a><?php endif; ?></td>
+		<td style="text-align:right"><?php echo $line['ip']; ?></td>
 	</tr>
 	<?php
 	if ($i==$len) {
-		echo '<tr style="background:#e5efff;"><td colspan="3"><strong>' . $dateline . '</strong> total redirects: <strong>' . $datecount . '</strong></td></tr>';
+		echo '<tr style="background:#e5efff;"><td colspan="4"><strong>' . $dateline . '</strong> total redirects: <strong>' . $datecount . '</strong></td></tr>';
 	}
 	} ?>
 </table>
