@@ -7,7 +7,7 @@ if (! $source_url ) {
 	die;
 }
 $message_version = $_GET['msg'];
-$date = date("F j Y");
+$date = date("F j, Y, g:i a");
 
 if ($message_version) {
 	$line = array($date,$message_version,$source_url);

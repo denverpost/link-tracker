@@ -53,7 +53,7 @@ foreach ($csv as $i=>$row) {
 array_reverse($csv);
 
 ?>
-<tr style="background:#e5e5e5;"><th>Date</th><th>Message</th><th>Referrer</th></tr>
+<tr style="background:#e5e5e5;"><th>Date Recorded</th><th>Msg</th><th>Referrer</th></tr>
 <?php
 $dateline = false;
 $datecount = 0;
