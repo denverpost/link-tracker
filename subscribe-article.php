@@ -36,7 +36,7 @@ if (!_bot_detected()){
     $source_url = (strrpos($source_url, 'www.denverpost.com') == FALSE) ? '(Referrer data unavailable)' : $source_url;
 
     // if ( ! ($message_version == $last_data[1] && $client_ip == $last_data[3] ) ) {
-    if ( isset($message_version) ) {
+    if ( isset($message_version && $date !== $last_data[0]) ) {
     	$line = array($date,$message_version,$source_url,$client_ip);
     	if (($handle = fopen("track-subscribe-article.csv", "a")) !== FALSE) {
     		fputcsv($handle, $line);
