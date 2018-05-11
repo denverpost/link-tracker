@@ -46,12 +46,11 @@
 <?php
 
 $csv = array_map("str_getcsv", file("track-subscribe-article.csv",FILE_SKIP_EMPTY_LINES));
-array_reverse($csv,true);
 $keys = array_shift($csv);
 foreach ($csv as $i=>$row) {
     $csv[$i] = array_combine($keys, $row);
 }
-
+$csv = array_reverse($csv,true);
 
 ?>
 <tr style="background:#e5e5e5;"><th width="20%">Date Recorded</th><th>Msg</th><th width="60%">Referrer</th><th>IP</th></tr>
