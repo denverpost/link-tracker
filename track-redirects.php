@@ -46,6 +46,9 @@
 					<table style="width:100%;">
 <?php
 
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
+
 $csv = array_map("str_getcsv", file("track-subscribe-article.csv",FILE_SKIP_EMPTY_LINES));
 $keys = array_shift($csv);
 foreach ($csv as $i=>$row) {
@@ -56,18 +59,31 @@ $csv = array_reverse($csv,true);
 ?>
 <tr style="background:#e5e5e5;"><th width="20%">Date Recorded</th><th>Msg</th><th width="60%">Referrer</th><th>IP</th></tr>
 <?php
+
+function total_messages($count) {
+	ksort($count);
+	$returns = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Counts: ';
+	foreach ($count as $key => $value) {
+		$returns .= '&nbsp;&nbsp;&nbsp;<strong>Msg ' . $key . ':</strong> ' . $value . '';
+	}
+	return $returns;
+}
+
 $dateline = false;
 $datecount = 0;
+$msg_counts = array();
 $i=0;
 $len=count($csv);
 foreach ($csv as $line) {
 	$i++;
-	$datetotal = '<tr style="background:#e5efff;"><td colspan="4"><strong>' . $dateline . '</strong> total redirects: <strong>' . $datecount . '</strong></td></tr>';
+	$datetotal = '<tr style="background:#e5efff;"><td colspan="4"><strong>' . $dateline . '</strong> total redirects: <strong>' . $datecount . '</strong>' . total_messages($msg_counts) . '</td></tr>';
 	$datecount++;
+	$msg_counts[$line['msg']] = ( isset($msg_counts[$line['msg']]) ) ? $msg_counts[$line['msg']] + 1 : 1;
 	$line_date = date("m-d-Y",strtotime($line['date']));
 	if ($dateline !== false && $dateline != $line_date) {
 		echo $datetotal;
 		$datecount = 1;
+		$msg_counts = array();
 	}
 	if ($dateline != $line_date) {
 		$dateline = $line_date;
@@ -81,7 +97,7 @@ foreach ($csv as $line) {
 	</tr>
 	<?php
 	if ($i==$len) {
-		echo '<tr style="background:#e5efff;"><td colspan="4"><strong>' . $dateline . '</strong> total redirects: <strong>' . $datecount . '</strong></td></tr>';
+		echo '<tr style="background:#e5efff;"><td colspan="4"><strong>' . $dateline . '</strong> total redirects: <strong>' . $datecount . '</strong>' . total_messages($msg_counts) . '</td></tr>';
 	}
 	} ?>
 </table>
