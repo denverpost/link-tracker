@@ -8,7 +8,10 @@ function _bot_detected() {
   );
 }
 
-if (!_bot_detected()){
+$message_raw = (int)$_GET['msg'];
+$message_version = ( is_int($message_raw) && in_array($message_raw, array(1,2,3,4,5,6,7)) ) ? $message_raw : false;
+
+if (!_bot_detected() && $message_version){
     function getIP($ip = null, $deep_detect = TRUE){
         if (filter_var($ip, FILTER_VALIDATE_IP) === FALSE) {
             $ip = $_SERVER["REMOTE_ADDR"];
